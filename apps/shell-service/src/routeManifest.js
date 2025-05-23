@@ -17,19 +17,25 @@ const routeManifest = [
       module: 'vueService',
       entry: 'http://localhost:5012/remoteEntry.js',
     },
-    route: {
-      name: 'vueService',
-      path: '/vue',
-      meta: {
-        title: 'Micro App 2',
+    routes: [
+      {
+        name: 'vueHome',
+        path: '/vue',
+        meta: {
+          title: 'Vue Home',
+        },
       },
-    },
+      {
+        name: 'vueAbout',
+        path: '/about',
+        meta: {
+          title: 'Vue About',
+        },
+      },
+    ],
   },
 ];
 
-/**
- * This function returns the remotes from the route manifest.
- */
 export const getRemotes = () => {
   return routeManifest.map((mfe) => mfe.remote);
 };

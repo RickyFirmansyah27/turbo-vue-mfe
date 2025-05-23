@@ -56,7 +56,14 @@ const currentModule = ref(null);
 
 // Function to find the correct MFE based on the current route
 const findRouteManifest = (routeName: string) => {
-  return routeManifest.find((mfe) => mfe.route.name === routeName);
+  return routeManifest.find((mfe) => {
+    if (mfe.route) {
+      return mfe.route.name === routeName;
+    } else if (Array.isArray(mfe.routes)) {
+      return mfe.routes.some((r) => r.name === routeName);
+    }
+    return false;
+  });
 };
 
 // Function to load and mount the remote micro frontend
@@ -92,7 +99,7 @@ const initializeRemote = () => {
     return;
   }
 
-  const { remote } = routeConfig;
+  const remote = routeConfig.remote;
   if (remote?.module) loadRemote(remote);
 };
 
